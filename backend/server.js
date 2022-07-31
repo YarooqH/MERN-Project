@@ -1,10 +1,20 @@
 require('dotenv').config()
 
 const express = require('express');
-const mongoose = require('mongoose');
 const router = require('./routes/handler');
+const mongoose = require('mongoose');
+const msg = require('./models/messages');
+
+const io = require('socket.io')(1800);
 
 const app = express();
+
+io.on('connection', (socket) => {
+    console.log('a user connected');
+    socket.on('disconnect', () => {
+      console.log('user disconnected');
+    });
+});
 
 app.use(express.json());
 
