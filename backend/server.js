@@ -9,12 +9,6 @@ const io = require('socket.io')(1800);
 
 const app = express();
 
-io.on('connection', (socket) => {
-    console.log('a user connected');
-    socket.on('disconnect', () => {
-      console.log('user disconnected');
-    });
-});
 
 app.use(express.json());
 
@@ -38,6 +32,14 @@ mongoose.connect(process.env.MONGO_URI)
         app.listen(process.env.PORT, () => {
             console.log('Connected to MongoDB');
             console.log('Server is running on port ' + process.env.PORT);
+            io.on('connection', (socket) => {
+                socket.emit('message', 'Welcome to the chat');
+                console.log('a user connected');
+                socket.on('disconnect', () => {
+                console.log('user disconnected');
+                });
+            });
+            
         })
     })
     .catch(err => console.log(err));
