@@ -4,6 +4,10 @@ const msgSchema = new mongoose.Schema({
     msg: {
         type: String,
         required: true
+    },
+    name: {
+        type: String,
+        required: true
     }
 })
 
